@@ -10,7 +10,7 @@
     </div>
     
     <script>
-    var renderer, scene, camera, composer, circle, skelet, particle;
+    var renderer, scene, camera, composer, circle, skelet, particle, nowa11;
 
     window.onload = function() {
     init();
@@ -27,55 +27,70 @@
 
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(95, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.z = 300;
+    camera = new THREE.PerspectiveCamera(115, window.innerWidth / window.innerHeight, 1, 1000);
+    camera.position.z = 30;
     scene.add(camera);
 
     circle = new THREE.Object3D();
     skelet = new THREE.Object3D();
     particle = new THREE.Object3D();
+    nowa11 = new THREE.Object3D();
 
     scene.add(circle);
     scene.add(skelet);
     scene.add(particle);
+    scene.add(nowa11);
 
-    var geometry = new THREE.TetrahedronGeometry(5, 0);
-    var geom = new THREE.IcosahedronGeometry(7, 1);
-    var geom2 = new THREE.IcosahedronGeometry(15, 1);
+    var geometry = new THREE.TetrahedronGeometry(1, 0);
+    var geom = new THREE.IcosahedronGeometry(3, 1);
+    var geom2 = new THREE.IcosahedronGeometry(7, 1);
+    var geom3 = new THREE.TetrahedronGeometry(20, 0);
 
     var material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
       shading: THREE.FlatShading
     });
 
-    for (var i = 0; i < 100; i++) { 
+    for (var i = 0; i < 2; i++) { 
       var mesh = new THREE.Mesh(geometry, material);
       mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
-      mesh.position.multiplyScalar(150 + (Math.random() * 100)); 
+      mesh.position.multiplyScalar(1 + (Math.random() * 20)); 
       mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
       particle.add(mesh);
+      nowa11.add(mesh);
     }
 
     var mat = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
+      color: 0x00ffff,
       wireframe: true, //zalivka wnutri
       shading: THREE.FlatShading
     });
 
     var mat2 = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
+      color: 0xff00ff,
       wireframe: true, //zalivka wnutri planety
       side: THREE.DoubleSide
 
     });
 
+    var mat3 = new THREE.MeshPhongMaterial({
+      color: 0xffff00,
+      wireframe: true, //zalivka triugolnika
+      side: THREE.DoubleSide
+
+    });
+
     var planet = new THREE.Mesh(geom, mat);
-    planet.scale.x = planet.scale.y = planet.scale.z = 12;
+    planet.scale.x = planet.scale.y = planet.scale.z = 4;
     circle.add(planet);
 
     var planet2 = new THREE.Mesh(geom2, mat2);
-    planet2.scale.x = planet2.scale.y = planet2.scale.z = 4;
+    planet2.scale.x = planet2.scale.y = planet2.scale.z = 3;
     skelet.add(planet2);
+
+    var nowa22 = new THREE.Mesh(geom3, mat3);
+    nowa22.scale.x = nowa22.scale.y = nowa22.scale.z = 1;
+    nowa11.add(nowa22);
 
     var ambientLight = new THREE.AmbientLight(0x789bb8 );
     scene.add(ambientLight);
@@ -105,14 +120,18 @@
     function animate() {
     requestAnimationFrame(animate);
 
+    // // nowa.rotation.x += 0.0010;
+    // // nowa.rotation.y -= 0.0010;
     particle.rotation.x += 0.0000;
-    particle.rotation.y -= 0.0040;
+    particle.rotation.y -= 0.0010;
     circle.rotation.x += 0.0000;
-    circle.rotation.y -= 0.0040;
-    skelet.rotation.x -= 0.0040;
+    circle.rotation.y -= 0.0010;
+    nowa11.rotation.x -= 0.0010;
+    nowa11.rotation.y += 0.0000;
+    skelet.rotation.x -= 0.0010;
     skelet.rotation.y += 0.0000;
-    // circle.rotation.x -= 0.0020;
-    // circle.rotation.y -= 0.0030;
+    // // circle.rotation.x -= 0.0020;
+    // // circle.rotation.y -= 0.0030;
     // skelet.rotation.x -= 0.0010;
     // skelet.rotation.y += 0.0020;
     renderer.clear();
